@@ -24,7 +24,6 @@ dependencies {
 	compile 'commons-dbcp:commons-dbcp:1.4'
 	compile 'org.springframework:spring-jdbc:4.3.7.RELEASE'
 	runtime 'org.springframework:spring-beans:4.3.7.RELEASE'
-	compile 'com.oracle:ojdbc6:11.2.0.3'
 	runtime 'joda-time:joda-time:2.9.7'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.8.7'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.8.7'
