@@ -1,8 +1,14 @@
+plugins {
+    id "com.moowork.node" version "1.1.1"
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
 
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
+
+
 
 // JDK 7
 sourceCompatibility = 1.7
@@ -18,18 +24,43 @@ dependencies {
     compile 'javax.servlet:jstl:1.2'
     compile 'org.springframework.batch:spring-batch-admin-manager:2.0.0.M1'
     compile 'org.springframework.data:spring-data-commons:1.13.1.RELEASE'
-	compile 'org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE'
-	compile 'org.springframework.batch:spring-batch-core:3.0.7.RELEASE'
-	compile 'org.springframework.batch:spring-batch-admin-domain:2.0.0.M1'
-	compile 'commons-dbcp:commons-dbcp:1.4'
-	compile 'org.springframework:spring-jdbc:4.3.7.RELEASE'
-	runtime 'org.springframework:spring-beans:4.3.7.RELEASE'
-	runtime 'joda-time:joda-time:2.9.7'
-	compile 'com.fasterxml.jackson.core:jackson-core:2.8.7'
-	compile 'com.fasterxml.jackson.core:jackson-databind:2.8.7'
-	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.7'
-	compile 'com.h2database:h2:1.4.193'
-	
+    compile 'org.springframework.hateoas:spring-hateoas:0.23.0.RELEASE'
+    compile 'org.springframework.batch:spring-batch-core:3.0.7.RELEASE'
+    compile 'org.springframework.batch:spring-batch-admin-domain:2.0.0.M1'
+    compile 'commons-dbcp:commons-dbcp:1.4'
+    compile 'org.springframework:spring-jdbc:4.3.7.RELEASE'
+    runtime 'org.springframework:spring-beans:4.3.7.RELEASE'
+    runtime 'joda-time:joda-time:2.9.7'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.7'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.7'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.7'
+    compile 'com.h2database:h2:1.4.193'
+
     //include in compile only, exclude in the war
     providedCompile 'javax.servlet:servlet-api:2.5'
 }
+
+node {
+    version = "6.10.0"
+    download = true
+    workDir = file("${project.buildDir}/nodejs")
+
+    // Set the work directory for NPM
+    npmWorkDir = file("${project.buildDir}/npm")
+    // Set the work directory where node_modules should be located
+   // nodeModulesDir = file("${project.projectDir}src/main/webapp")
+
+}
+
+task appNpmInstall(type: NpmTask) {
+    description = "Installs dependencies from package.json"
+    workingDir = file("${project.projectDir}/src/main/webapp")
+    args = ['install']
+}
+
+task buildProd(type:NpmTask,dependsOn:appNpmInstall){
+   workingDir = file("${project.projectDir}/src/main/webapp")
+    args=['run','build_prod']
+}
+
+

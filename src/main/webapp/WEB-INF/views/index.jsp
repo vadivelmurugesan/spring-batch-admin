@@ -7,6 +7,9 @@
 <title>Vasaka Spring Batch Admin</title>
 </head>
 <body>
-Vasaka Spring Batch Admin
+<my-app></my-app>
+  <script src="node_modules/zone.js/dist/zone.js"></script>
+  <script src="node_modules/reflect-metadata/Reflect.js"></script>
+  <script src="dist/bundle.js"></script>
 </body>
 </html>
